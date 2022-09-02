@@ -39,10 +39,14 @@
         background-color: beige;
         margin-left: 90px;
     }
-
-    .game_area {
+    .content {
+        width: 100%;
+        display: block;
         margin: 20px auto;
-        width: 400px;
+    }
+    .game_area {
+        float: left;
+        width: 33%;
         height: 400px;
         background-color: honeydew;
         font-size: 100px;
@@ -51,13 +55,23 @@
         /* line-height: 250px; */
         padding-top: 100px;
     }
-
+    .feedback {
+        float: left;
+        width: 33%;
+        height: 400px;
+        background-color: #ccc;
+        padding-top: 100px;
+        font-size: 20px;
+        text-align: center;
+        line-height: 200px;
+    }
     .result {
-        margin: 20px auto;
-        width: 400px;
+        margin: 5px auto;
+        height: 400px;
         background-color: blanchedalmond;
         text-align: center;
         font-size: 20px;
+        padding-top: 100px;
     }
 
     .result h2 {
@@ -75,17 +89,19 @@
         <button class="start">重新开始</button>
         <button class="end">结束</button>
     </div>
-    <div class="game_area">点击屏幕开始
-        <audio id="mp3audio" autoplay>
-            <source src="wave/start.wav" type="audio/mpeg" id="beijingyine">
-        </audio>
-    </div>
+    <div class="content">
+        <div class="feedback"></div>
+        <div class="game_area">点击屏幕开始
+            <audio id="mp3audio" autoplay>
+                <source src="wave/start.wav" type="audio/mpeg" id="beijingyine">
+            </audio>
+        </div>
     </div>
     <div class='result'>
-        <h2>🎉恭喜🎉</h2>
-        <p>正确点击5次</p>
-        <p>误点击2次</p>
-        <p>漏点3次</p>
+        <h2>🎉结果榜单🎉</h2>
+        <p></p>
+        <p></p>
+        <p></p>
     </div>
 </body>
 <script>
@@ -107,7 +123,8 @@
     var result = document.querySelector('.result')
     var start = document.querySelector('.start')
     var end = document.querySelector('.end')
-    result.style.display = "none";
+    var feedback = document.querySelector('.feedback')
+    // result.style.display = "none";
     start.addEventListener('click', function () {
         //初始化，刷新页面
         location.reload();
@@ -124,7 +141,7 @@
         var random_number;
         clearInterval(timer);
         timer = setInterval(function () {
-            number.innerHTML='点击屏幕'
+            number.innerHTML = '点击屏幕'
             ReactTime[flag] = 0;
             start_time = Date.now();
             random_number = Math.floor(Math.random() * 10)
@@ -140,6 +157,7 @@
                     if (tar == number) {
                         end_time = Date.now();
                         ReactTime[flag - 1] = (end_time - start_time);
+                        feedback.innerHTML = '🎉恭喜，点击对了！'
                         console.log("点击对了", end_time - start_time)
                     }
                 }
@@ -151,6 +169,7 @@
                     var tar = evt.target || evt.srcElement;
                     if (tar == number) {
                         ReactTime[flag - 1] = -1
+                        feedback.innerHTML = '😭抱歉，点击错了！'
                         console.log("点击错了")
                     }
                 }
@@ -189,7 +208,7 @@
                 result.children[2].innerHTML = p2
                 var p3 = "漏点" + miss_count + "次"
                 result.children[3].innerHTML = p3
-                result.style.display = "block";
+                // result.style.display = "block";
             }
         }, set_time * 1000)
     }
