@@ -10,40 +10,71 @@
 </head>
 <style>
     * {
-    margin: 0;
-    padding: 0;
-}
-.title{
-    margin: 0 auto;
-    text-align: center;
-}
-.game_area{
-    margin:20px auto;
-    width: 400px;
-    height: 400px;
-    background-color:honeydew;
-    font-size: 100px;
-    color: black;
-    text-align: center;
-    /* line-height: 250px; */
-    padding-top: 100px;
-}
-.result{
-    margin:20px auto;
-    width: 400px;
-    background-color:blanchedalmond;
-    text-align: center;
-    font-size: 20px;
-}
-.result h2{
-    margin-bottom: 10px;
-}
-.result p{
-    margin: 5px;
-}
+        margin: 0;
+        padding: 0;
+    }
+
+    .title {
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .button {
+        margin: 0 auto;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .start {
+        width: 100px;
+        height: 40px;
+        border-color: #ccc;
+        background-color: aquamarine;
+    }
+
+    .end {
+        width: 100px;
+        height: 40px;
+        border-color: #ccc;
+        background-color: beige;
+        margin-left: 90px;
+    }
+
+    .game_area {
+        margin: 20px auto;
+        width: 400px;
+        height: 400px;
+        background-color: honeydew;
+        font-size: 100px;
+        color: black;
+        text-align: center;
+        /* line-height: 250px; */
+        padding-top: 100px;
+    }
+
+    .result {
+        margin: 20px auto;
+        width: 400px;
+        background-color: blanchedalmond;
+        text-align: center;
+        font-size: 20px;
+    }
+
+    .result h2 {
+        margin-bottom: 10px;
+    }
+
+    .result p {
+        margin: 5px;
+    }
 </style>
+
 <body>
     <h1 class="title">2-back-audio</h1>
+    <div class="button">
+        <button class="start">重新开始</button>
+        <button class="end">结束</button>
+    </div>
     <div class="game_area">点击屏幕开始
         <audio id="mp3audio" autoplay>
             <source src="wave/start.wav" type="audio/mpeg" id="beijingyine">
@@ -65,30 +96,40 @@
     var success_count = 0;//点击正确的次数
     var fail_count = 0;//点击错误的次数
     var miss_count = 0;//错过点击的次数
-    var total_time = 30;//游戏总时长
+    var total_time = 1000;//游戏总时长
     var random_list = [];//随机产生的数组
     var timer;
     var start_time, end_time;
     var flag = 0;
 
     var number = document.querySelector('.game_area')
-    var audioplay=document.querySelector('#mp3audio');
+    var audioplay = document.querySelector('#mp3audio');
     var result = document.querySelector('.result')
+    var start = document.querySelector('.start')
+    var end = document.querySelector('.end')
     result.style.display = "none";
+    start.addEventListener('click', function () {
+        //初始化，刷新页面
+        location.reload();
+        console.log('你点击了开始！')
+    })
+    end.addEventListener('click', function () {
+        total_time = 0;
+    })
     if (total_time > 0) {
         number.addEventListener('click', fn);
     }
     function fn() {
         console.log("你点击了start")
-        number.innerHTML=" "
         var random_number;
         clearInterval(timer);
         timer = setInterval(function () {
+            number.innerHTML='点击屏幕'
             ReactTime[flag] = 0;
             start_time = Date.now();
             random_number = Math.floor(Math.random() * 10)
             random_list.push(random_number);
-            var number_sound="wave/"+random_number+".mp3"
+            var number_sound = "wave/" + random_number + ".mp3"
             audioplay.setAttribute('src', number_sound);
             console.log(audioplay.src)
             if (random_number == random_list[flag - 2]) {
