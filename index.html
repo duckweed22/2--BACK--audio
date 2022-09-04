@@ -1,12 +1,25 @@
-<audio autoplay="autopaly" loop="loop" id="audios">
-    <source src="wave/start.wav" type="audio/mpeg" />
-</audio>
- 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <audio autoplay="autopaly" loop="loop" id="audios">
+        <source src="wave/start.wav" type="audio/mpeg" />
+    </audio>
+</body>
 <script>
-// 将以下代码添加到js入口函数内即可
-// 这里使用了微信自带的WeixinJSBridgeReady事件
-document.addEventListener('WeixinJSBridgeReady', function() {
-    document.getElementById('audios').play()
-})
- 
+    // 将以下代码添加到js入口函数内即可
+    // 这里使用了微信自带的WeixinJSBridgeReady事件
+    document.addEventListener('WeixinJSBridgeReady', function () {
+        document.getElementById('audios').play()
+    })
+
 </script>
+
+</html>
